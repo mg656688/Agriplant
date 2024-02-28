@@ -1,5 +1,5 @@
+import 'package:agriplant/pages/market/orders_page.dart';
 import 'package:agriplant/pages/onboarding_page.dart';
-import 'package:agriplant/pages/orders_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +19,23 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green.shade100,
+        centerTitle: false,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("My Profile", style: Theme.of(context).textTheme.titleLarge)
+          ],
+        ),
+      ),
       body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 15),
             child: CircleAvatar(
               radius: 62,
-              backgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: Colors.white,
               child: CircleAvatar(
                 radius: 60,
                 foregroundImage: NetworkImage(_user?.photoURL ?? ''),
@@ -41,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           Center(
             child: Text(
               _user?.email ?? "user@example.com",
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           const SizedBox(height: 25),

@@ -17,7 +17,7 @@ class OnboardingPage extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(),
+          builder: (context) =>  const HomePage(),
         ),
       );
       return Container(); // Return an empty container as the widget is replaced
@@ -76,7 +76,7 @@ Future<UserCredential?> signUpWithGoogle(BuildContext context) async {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => HomePage(),
+        builder: (context) =>  const HomePage(),
       ),
     );
 

@@ -2,41 +2,38 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:agriplant/data/services.dart';
 import 'package:agriplant/models/service.dart';
-import 'package:agriplant/pages/home_page.dart';
-import 'package:agriplant/pages/paddy_info_page.dart';
-import 'package:agriplant/pages/services_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:agriplant/pages/corn_info_page.dart';
-import 'package:flutter/foundation.dart';
 import 'package:async/async.dart';
 
+import 'corn_info_page.dart';
 
-class PaddyService extends StatefulWidget {
+
+class CornService extends StatefulWidget {
   final Service service;
-
-  const PaddyService({Key? key, required this.service}) : super(key: key);
-
+  const CornService({Key? key, required this.service}) : super(key: key);
 
   @override
-  _PaddyServiceState createState() => _PaddyServiceState();
+  _CornServiceState createState() => _CornServiceState();
 }
 
-class _PaddyServiceState extends State<PaddyService> {
+class _CornServiceState extends State<CornService> {
 
   late final Service service;
-  XFile? image;
-  final ImagePicker picker = ImagePicker();
-  late String prediction = '';
-  bool isLoading = false;
-
 
   @override
   void initState() {
     super.initState();
     service = widget.service;
   }
+
+  XFile? image;
+  final ImagePicker picker = ImagePicker();
+  late String prediction = '';
+  bool isLoading = false;
+
 
   //we can upload image from camera or from gallery based on parameter
   Future getImage(ImageSource media) async {
@@ -58,7 +55,7 @@ class _PaddyServiceState extends State<PaddyService> {
             title: const Text(
               'Please choose an image',
               style: TextStyle(
-                  fontWeight: FontWeight.bold
+                fontWeight: FontWeight.bold
               ),
             ),
             content: SizedBox(
@@ -116,11 +113,11 @@ class _PaddyServiceState extends State<PaddyService> {
                             Icons.camera),
                         SizedBox(width: 12),
                         Text(
-                          'From Camera',
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white
-                          ),
+                            'From Camera',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white
+                            ),
                         ),
                       ],
                     ),
@@ -138,14 +135,14 @@ class _PaddyServiceState extends State<PaddyService> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Padding(
+        title:  Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
           child: Text(
             service.name,
             style: const TextStyle(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 22
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 22
             ),
           ),
         ),
@@ -171,9 +168,9 @@ class _PaddyServiceState extends State<PaddyService> {
               child: const Text(
                   'Scan your plant',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600
                   )
               ),
             ),
@@ -229,12 +226,12 @@ class _PaddyServiceState extends State<PaddyService> {
                       backgroundColor: Colors.grey,
                     )
                         : const Text(
-                        'Identify',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600
-                        )
+                      'Identify',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600
+                      )
                     ),
                   ),
                 ),
@@ -274,7 +271,7 @@ class _PaddyServiceState extends State<PaddyService> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PaddyDiseaseInfoScreen(prediction)),
+                                    builder: (context) => CornDiseaseInfoScreen(prediction)),
                               );
                             },
                             child: const Text(
@@ -300,13 +297,19 @@ class _PaddyServiceState extends State<PaddyService> {
 
 
 
-  Future<void> uploadImageToServer(XFile imageFile) async {
+
+    Future<void> uploadImageToServer(XFile imageFile) async {
     try {
       if (kDebugMode) {
         print("attempting to connect to server......");
       }
+      var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+      var length = await imageFile.length();
+      if (kDebugMode) {
+        print(length);
+      }
 
-      var uri = Uri.parse("http://192.168.1.9:5000/paddy");
+      var uri = Uri.parse("http://192.168.1.9:5000/corn");
 
       var request = http.MultipartRequest("POST", uri);
       var multipartFile = await http.MultipartFile.fromPath('file', imageFile.path);
@@ -338,5 +341,6 @@ class _PaddyServiceState extends State<PaddyService> {
       }
     }
   }
+
 
 }

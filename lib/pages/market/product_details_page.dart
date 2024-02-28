@@ -1,14 +1,15 @@
-import 'package:agriplant/data/products.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
-import '../models/product.dart';
+import 'package:provider/provider.dart';
+import '../../models/product.dart';
+import '../../view_model/market/market_view_model.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   const ProductDetailsPage({super.key, required this.product});
 
   final Product product;
+
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
@@ -17,6 +18,7 @@ class ProductDetailsPage extends StatefulWidget {
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   late TapGestureRecognizer readMoreGestureRecognizer;
   bool showMore = false;
+
 
   @override
   void initState() {
@@ -33,6 +35,22 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   void dispose() {
     super.dispose();
     readMoreGestureRecognizer.dispose();
+  }
+
+  // Method to decrease quantity
+  void decreaseQuantity() {
+    if (widget.product.quantity > 1) {
+      setState(() {
+        widget.product.quantity--;
+      });
+    }
+  }
+
+  // Method to increase quantity
+  void increaseQuantity() {
+    setState(() {
+      widget.product.quantity++;
+    });
   }
 
   @override
@@ -107,7 +125,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 width: 30,
                 child: IconButton.filledTonal(
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: decreaseQuantity,
                   iconSize: 18,
                   icon: const Icon(Icons.remove),
                 ),
@@ -115,7 +133,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Text(
-                  "2 ${widget.product.unit}",
+                  "${widget.product.quantity} ${widget.product.unit}",
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -126,7 +144,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 width: 30,
                 child: IconButton.filledTonal(
                   padding: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: increaseQuantity,
                   iconSize: 18,
                   icon: const Icon(Icons.add),
                 ),
@@ -160,44 +178,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
           ),
           const SizedBox(height: 20),
-          Text(
-            "Similar Products",
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium!
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            height: 90,
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Container(
-                  height: 90,
-                  width: 80,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(products[index].image),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                );
-              },
-              separatorBuilder: (__, _) => const SizedBox(
-                width: 10,
-              ),
-              itemCount: products.length,
-            ),
-          ),
-          const SizedBox(height: 20),
           FilledButton.icon(
-              onPressed: () {},
-              icon: const Icon(IconlyLight.bag2),
-              label: const Text("Add to cart")
+            onPressed: () {
+              // Add the current product to the cart
+              Provider.of<MarketViewModel>(context, listen: false)
+                  .addToCartFromProductPage(widget.product, widget.product.quantity);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Product added to cart'),
+                ),
+              );
+            },
+            icon: const Icon(IconlyLight.bag2),
+            label: const Text("Add to cart"),
           )
         ],
       ),

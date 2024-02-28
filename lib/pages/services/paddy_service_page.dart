@@ -1,40 +1,37 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:agriplant/data/services.dart';
 import 'package:agriplant/models/service.dart';
-import 'package:agriplant/pages/home_page.dart';
-import 'package:agriplant/pages/services_page.dart';
-import 'package:flutter/foundation.dart';
+import 'package:agriplant/pages/services/paddy_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:agriplant/pages/corn_info_page.dart';
-import 'package:async/async.dart';
+import 'package:flutter/foundation.dart';
 
 
-class CornService extends StatefulWidget {
+class PaddyService extends StatefulWidget {
   final Service service;
-  const CornService({Key? key, required this.service}) : super(key: key);
+
+  const PaddyService({Key? key, required this.service}) : super(key: key);
+
 
   @override
-  _CornServiceState createState() => _CornServiceState();
+  _PaddyServiceState createState() => _PaddyServiceState();
 }
 
-class _CornServiceState extends State<CornService> {
+class _PaddyServiceState extends State<PaddyService> {
 
   late final Service service;
+  XFile? image;
+  final ImagePicker picker = ImagePicker();
+  late String prediction = '';
+  bool isLoading = false;
+
 
   @override
   void initState() {
     super.initState();
     service = widget.service;
   }
-
-  XFile? image;
-  final ImagePicker picker = ImagePicker();
-  late String prediction = '';
-  bool isLoading = false;
-
 
   //we can upload image from camera or from gallery based on parameter
   Future getImage(ImageSource media) async {
@@ -48,7 +45,7 @@ class _CornServiceState extends State<CornService> {
   //show popup dialog
   void myAlert() {
     showDialog(
-        context: this.context,
+        context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             shape:
@@ -56,7 +53,7 @@ class _CornServiceState extends State<CornService> {
             title: const Text(
               'Please choose an image',
               style: TextStyle(
-                fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold
               ),
             ),
             content: SizedBox(
@@ -114,11 +111,11 @@ class _CornServiceState extends State<CornService> {
                             Icons.camera),
                         SizedBox(width: 12),
                         Text(
-                            'From Camera',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white
-                            ),
+                          'From Camera',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white
+                          ),
                         ),
                       ],
                     ),
@@ -136,14 +133,14 @@ class _CornServiceState extends State<CornService> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title:  Padding(
+        title: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(0, 3, 0, 0),
           child: Text(
             service.name,
             style: const TextStyle(
-              fontFamily: 'Poppins',
-              color: Colors.white,
-              fontSize: 22
+                fontFamily: 'Poppins',
+                color: Colors.white,
+                fontSize: 22
             ),
           ),
         ),
@@ -169,9 +166,9 @@ class _CornServiceState extends State<CornService> {
               child: const Text(
                   'Scan your plant',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
                   )
               ),
             ),
@@ -227,12 +224,12 @@ class _CornServiceState extends State<CornService> {
                       backgroundColor: Colors.grey,
                     )
                         : const Text(
-                      'Identify',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600
-                      )
+                        'Identify',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600
+                        )
                     ),
                   ),
                 ),
@@ -272,7 +269,7 @@ class _CornServiceState extends State<CornService> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CornDiseaseInfoScreen(prediction)),
+                                    builder: (context) => PaddyDiseaseInfoScreen(prediction)),
                               );
                             },
                             child: const Text(
@@ -298,19 +295,13 @@ class _CornServiceState extends State<CornService> {
 
 
 
-
-    Future<void> uploadImageToServer(XFile imageFile) async {
+  Future<void> uploadImageToServer(XFile imageFile) async {
     try {
       if (kDebugMode) {
         print("attempting to connect to server......");
       }
-      var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-      var length = await imageFile.length();
-      if (kDebugMode) {
-        print(length);
-      }
 
-      var uri = Uri.parse("http://192.168.1.9:5000/corn");
+      var uri = Uri.parse("http://192.168.1.9:5000/paddy");
 
       var request = http.MultipartRequest("POST", uri);
       var multipartFile = await http.MultipartFile.fromPath('file', imageFile.path);
@@ -342,6 +333,5 @@ class _CornServiceState extends State<CornService> {
       }
     }
   }
-
 
 }

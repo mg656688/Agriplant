@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.7.0"
+  bloc:
+    dependency: transitive
+    description:
+      name: bloc
+      sha256: "3820f15f502372d979121de1f6b97bfcf1630ebff8fe1d52fb2b0bfa49be5b49"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.1.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -270,6 +278,30 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bloc:
+    dependency: "direct main"
+    description:
+      name: flutter_bloc
+      sha256: e74efb89ee6945bcbce74a5b3a5a3376b088e5f21f55c263fc38cbdc6237faae
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.1.3"
+  flutter_checkout_payment:
+    dependency: "direct main"
+    description:
+      name: flutter_checkout_payment
+      sha256: c68068df96a295a13024606c0cf26c9436d1a281940b63120ab79ed1878f27d8
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
+  flutter_credit_card:
+    dependency: "direct main"
+    description:
+      name: flutter_credit_card
+      sha256: dffaee369b0e64fb81e63e78d6410762f73b67346692bd2ae7bdcc6d911452e3
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
   flutter_iconly:
     dependency: "direct main"
     description:
@@ -536,6 +568,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   packages_extensions:
     dependency: transitive
     description:
@@ -656,6 +696,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.2"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.1"
   rational:
     dependency: transitive
     description:
@@ -680,6 +728,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  sh_toast:
+    dependency: "direct main"
+    description:
+      name: sh_toast
+      sha256: "68b2aa6240e21a008bc5a9dd97fd71e07123fb3cf9e40c2a55c45c017224e83a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -765,6 +821,70 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  url_launcher:
+    dependency: "direct main"
+    description:
+      name: url_launcher
+      sha256: c512655380d241a337521703af62d2c122bf7b77a46ff7dd750092aa9433499c
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.4"
+  url_launcher_android:
+    dependency: transitive
+    description:
+      name: url_launcher_android
+      sha256: "507dc655b1d9cb5ebc756032eb785f114e415f91557b73bf60b7e201dfedeb2f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.2"
+  url_launcher_ios:
+    dependency: transitive
+    description:
+      name: url_launcher_ios
+      sha256: "75bb6fe3f60070407704282a2d295630cab232991eb52542b18347a8a941df03"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.4"
+  url_launcher_linux:
+    dependency: transitive
+    description:
+      name: url_launcher_linux
+      sha256: ab360eb661f8879369acac07b6bb3ff09d9471155357da8443fd5d3cf7363811
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
+  url_launcher_macos:
+    dependency: transitive
+    description:
+      name: url_launcher_macos
+      sha256: b7244901ea3cf489c5335bdacda07264a6e960b1c1b1a9f91e4bc371d9e68234
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
+  url_launcher_platform_interface:
+    dependency: transitive
+    description:
+      name: url_launcher_platform_interface
+      sha256: a932c3a8082e118f80a475ce692fde89dc20fddb24c57360b96bc56f7035de1f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.1"
+  url_launcher_web:
+    dependency: transitive
+    description:
+      name: url_launcher_web
+      sha256: fff0932192afeedf63cdd50ecbb1bc825d31aed259f02bb8dba0f3b729a5e88b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
+  url_launcher_windows:
+    dependency: transitive
+    description:
+      name: url_launcher_windows
+      sha256: ecf9725510600aa2bb6d7ddabe16357691b6d2805f66216a97d1b881e21beff7
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   uuid:
     dependency: transitive
     description:
@@ -821,6 +941,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.5.0"
+  zapx:
+    dependency: "direct main"
+    description:
+      name: zapx
+      sha256: "2425a8ebe8fffe8ca3ac366460c37e7cdce260c554960e3b872422714020b114"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5+1"
 sdks:
   dart: ">=3.2.3 <4.0.0"
   flutter: ">=3.16.0"

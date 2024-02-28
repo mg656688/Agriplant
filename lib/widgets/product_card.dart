@@ -1,11 +1,12 @@
 import 'package:agriplant/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-
-import '../pages/product_details_page.dart';
+import '../pages/market/product_details_page.dart';
+import '../view_model/market/market_view_model.dart';
+import 'package:provider/provider.dart'; // Import Provider
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product});
+  const ProductCard({Key? key, required this.product}) : super(key: key);
 
   final Product product;
 
@@ -15,14 +16,15 @@ class ProductCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-              builder: (_) => ProductDetailsPage(product: product)),
+            builder: (_) => ProductDetailsPage(product: product),
+          ),
         );
       },
       child: Card(
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          side: BorderSide(color: Colors.grey.shade200),
+          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(color: Colors.grey),
         ),
         elevation: 0.1,
         child: Column(
@@ -30,15 +32,15 @@ class ProductCard extends StatelessWidget {
           children: [
             Container(
               height: 100,
-              alignment: Alignment.topRight,
               width: double.infinity,
-              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(product.image),
                   fit: BoxFit.cover,
                 ),
               ),
+              alignment: Alignment.topRight,
+              padding: const EdgeInsets.all(8),
               child: SizedBox(
                 width: 30,
                 height: 30,
@@ -59,7 +61,7 @@ class ProductCard extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
                       product.name,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                   Row(
@@ -69,11 +71,13 @@ class ProductCard extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                                text: "\$${product.price}",
-                                style: Theme.of(context).textTheme.bodyLarge),
+                              text: "\$${product.price}",
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                             TextSpan(
-                                text: "/${product.unit}",
-                                style: Theme.of(context).textTheme.bodySmall),
+                              text: "/${product.unit}",
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
                           ],
                         ),
                       ),
@@ -82,7 +86,11 @@ class ProductCard extends StatelessWidget {
                         height: 30,
                         child: IconButton.filled(
                           padding: EdgeInsets.zero,
-                          onPressed: () {},
+                          onPressed: () {
+                            // Access MarketViewModel using Provider
+                            Provider.of<MarketViewModel>(context, listen: false)
+                                .addToCartFromHome(product);
+                          },
                           iconSize: 18,
                           icon: const Icon(Icons.add),
                         ),

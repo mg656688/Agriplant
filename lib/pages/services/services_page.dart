@@ -1,10 +1,10 @@
 import 'dart:ui';
-
 import 'package:agriplant/data/services.dart';
 import 'package:agriplant/models/service.dart';
-import 'package:agriplant/pages/corn_service_page.dart';
-import 'package:agriplant/pages/paddy_service_page.dart';
+import 'package:agriplant/pages/services/paddy_service_page.dart';
 import 'package:flutter/material.dart';
+
+import 'corn_service_page.dart';
 
 class ServicesPage extends StatelessWidget {
   const ServicesPage({super.key});
@@ -12,6 +12,7 @@ class ServicesPage extends StatelessWidget {
   void navigateToServicePage(BuildContext context, Service service) {
     switch (service.name) {
       case "Paddy Disease Detector":
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => PaddyService(service: service)),
@@ -34,6 +35,11 @@ class ServicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green.shade100,
+        centerTitle: false,
+        title: Text("Our services", style: Theme.of(context).textTheme.titleLarge),
+      ),
       body: GridView.builder(
         itemCount: services.length,
         padding: const EdgeInsets.all(16),
